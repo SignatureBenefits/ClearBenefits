@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ClearBenefits v3.0 | 30 Exclusive Rewards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: radial-gradient(circle at 80% 10%, #0a0c1a, #02040f);
+      font-family: 'Inter', system-ui, sans-serif;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .content-area {
+      flex: 3;
+      min-width: 250px;
+    }
+    .level-sidebar {
+      flex: 0.9;
+      min-width: 200px;
+      position: sticky;
+      top: 2rem;
+      align-self: flex-start;
+      background: rgba(15, 20, 35, 0.75);
+      backdrop-filter: blur(16px);
+      border-radius: 2rem;
+      padding: 1.5rem 1rem;
+      border: 1px solid rgba(251, 146, 60, 0.5);
+      height: fit-content;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .level-sidebar h3 {
+      color: #ffd6a5;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .level-sidebar h3 i {
+      color: #fb923c;
+    }
+    .triggers-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .level-btn {
+      background: linear-gradient(105deg, #1a1e32, #11152a);
+      border: 1px solid #fb923c;
+      border-radius: 60px;
+      padding: 8px 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: #ffdead;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .level-btn i {
+      font-size: 0.75rem;
+      color: #fb923c;
+    }
+    .level-btn:hover {
+      background: linear-gradient(105deg, #2a2f4a, #1a1f38);
+      border-color: #f97316;
+      transform: translateY(-2px);
+    }
+    .level-btn.active {
+      background: linear-gradient(105deg, #ea580c, #c2410c);
+      border-color: #fdba74;
+      color: white;
+    }
+    .level-btn.active i {
+      color: #fff0e0;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fb923c, #f97316, #fdba74);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      justify-content: center;
+    }
+    .hero h1 i {
+      background: none;
+      -webkit-text-fill-color: #fb923c;
+      font-size: 2rem;
+    }
+    @media (max-width: 550px) {
+      .hero h1 {
+        font-size: 1.4rem;
+        gap: 8px;
+      }
+      .hero h1 i {
+        font-size: 1.3rem;
+      }
+    }
+    @media (max-width: 400px) {
+      .hero h1 {
+        font-size: 1.2rem;
+        gap: 6px;
+      }
+      .hero h1 i {
+        font-size: 1.1rem;
+      }
+    }
+    .stats-card {
+      background: rgba(10, 14, 30, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 1rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 2rem;
+      margin-bottom: 0;
+      border: 1px solid rgba(249, 115, 22, 0.4);
+    }
+    .total-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fcd9b6;
+      font-weight: 600;
+    }
+    .total-box i {
+      font-size: 2rem;
+      color: #fb923c;
+    }
+    .total-number {
+      background: #0a0e20;
+      padding: 6px 20px;
+      border-radius: 50px;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fb923c;
+      font-family: monospace;
+      letter-spacing: 2px;
+      border: 1px solid #f97316;
+    }
+    .legend {
+      display: flex;
+      gap: 20px;
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2d3a5e;
+    }
+    .dot.active {
+      background: #10b981;
+      box-shadow: 0 0 6px #34d399;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 1.5rem 0 1rem 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid rgba(249, 115, 22, 0.5);
+    }
+    .section-title i {
+      font-size: 1.5rem;
+      color: #fb923c;
+    }
+    .section-title h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fee3c0;
+    }
+    .badge {
+      background: #f97316;
+      padding: 2px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #0a0a1a;
+    }
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      max-height: 50vh;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .btn-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+    .btn-grid::-webkit-scrollbar-track {
+      background: #1e253e;
+      border-radius: 10px;
+    }
+    .btn-grid::-webkit-scrollbar-thumb {
+      background: #fb923c;
+      border-radius: 10px;
+    }
+    .offer-btn {
+      background: linear-gradient(105deg, #13182e, #0c1022);
+      border: 1px solid #3b3f66;
+      border-radius: 60px;
+      padding: 12px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .offer-btn:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(105deg, #1c2340, #12172e);
+      border-color: #fb923c;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+    }
+    .offer-btn.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+      background: linear-gradient(105deg, #1a2a1a, #0f1f0f);
+      border-color: #4a6a4a;
+      transform: none;
+    }
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+    .btn-left i {
+      font-size: 1.2rem;
+      color: #fb923c;
+      min-width: 28px;
+      text-align: center;
+    }
+    .btn-left span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .click-count {
+      background: #00000055;
+      border-radius: 40px;
+      padding: 3px 12px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #fdba74;
+      border: 0.5px solid #fb923c;
+      font-family: monospace;
+    }
+    .offer-btn.clicked {
+      background: linear-gradient(105deg, #0f3b2a, #0a261c);
+      border-color: #10b981;
+    }
+    .offer-btn.clicked .click-count {
+      background: #064e3b;
+      color: #facc15;
+    }
+    .reset-btn {
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid #f97316;
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #fdba74;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .reset-btn:hover {
+      background: #f9731630;
+      color: #ffffff;
+      border-color: #fb923c;
+    }
+    footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    @media (max-width: 850px) {
+      .main-container { flex-direction: column; }
+      .level-sidebar { display: none; }
+      .mobile-tier-bar {
+        display: block;
+        background: rgba(15, 20, 35, 0.85);
+        backdrop-filter: blur(16px);
+        border-radius: 1.5rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(251, 146, 60, 0.5);
+      }
+      .mobile-tier-bar h3 {
+        color: #ffd6a5;
+        font-size: 1rem;
+        text-align: center;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .mobile-triggers {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+      }
+      .mobile-tier-btn {
+        background: linear-gradient(105deg, #1a1e32, #11152a);
+        border: 1px solid #fb923c;
+        border-radius: 60px;
+        padding: 6px 0;
+        font-weight: 700;
+        font-size: 0.65rem;
+        color: #ffdead;
+        cursor: pointer;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+      .mobile-tier-btn i { font-size: 0.65rem; color: #fb923c; }
+      .mobile-tier-btn.active {
+        background: linear-gradient(105deg, #ea580c, #c2410c);
+        border-color: #fdba74;
+        color: white;
+      }
+      .btn-grid { max-height: 45vh; }
+      .stats-card { margin-top: 1.5rem; }
+    }
+    @media (min-width: 851px) {
+      .mobile-tier-bar { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="main-container">
+  <div class="content-area">
+    <div class="hero">
+      <h1><i class="fas fa-crown"></i> CLEARBENEFITS V3.0 <i class="fas fa-gem"></i></h1>
+    </div>
+    <div class="mobile-tier-bar" id="mobileTierBar">
+      <h3><i class="fas fa-layer-group"></i> Choose Tier</h3>
+      <div class="mobile-triggers" id="mobileTriggers"></div>
+    </div>
+    <div class="section-title" id="dynamicSectionTitle">
+      <i class="fas fa-layer-group"></i>
+      <h2 id="levelName">Tier 1 · Starter Pack</h2>
+      <div class="badge" id="levelBadge">3 Offers</div>
+    </div>
+    <div id="offersGrid" class="btn-grid"></div>
+    <div class="stats-card">
+      <div class="total-box">
+        <i class="fas fa-chart-line"></i>
+        <span>Total Clicks</span>
+        <div class="total-number" id="totalClicks">0</div>
+      </div>
+      <div class="legend">
+        <span><i class="dot"></i> Pending</span>
+        <span><i class="dot active"></i> Claimed</span>
+      </div>
+    </div>
+    <footer>
+      <span><i class="far fa-clock"></i> 30 Live Rewards · 10 Exclusive Tiers · Click & Collect</span>
+      <div class="reset-btn" id="resetAllBtn"><i class="fas fa-trash-alt"></i> Reset Counters</div>
+    </footer>
+  </div>
+  <div class="level-sidebar">
+    <h3><i class="fas fa-layer-group"></i> Choose Tier</h3>
+    <div class="triggers-grid" id="desktopTriggers"></div>
+  </div>
+</div>
+<script>
+  const ALL_LINKS = [
+    "https://consciousdunkvastly.com/sbe0y3fte?key=0cffd7ca88c29b0fd2c8a254bce168ab",
+    "https://consciousdunkvastly.com/a8pskzuu?key=d2a462f68bc0aa280e14cf395f3d3029",
+    "https://consciousdunkvastly.com/d0mfy166s?key=5ac49908a9b55a01668e9df168c37a31",
+    "https://consciousdunkvastly.com/mi2kt7e0s?key=b6aafa60589f6451f106c082ea941a42",
+    "https://consciousdunkvastly.com/r5kexzcz1?key=cfd3cdcee8f0394db3af34ca81d92ad4",
+    "https://consciousdunkvastly.com/ijwsnt1yc1?key=e76b7e1669cb1536c3423b48b15a9fef",
+    "https://consciousdunkvastly.com/ybsy6ine?key=a27447ae9bc523ca9f04539394a8ef47",
+    "https://consciousdunkvastly.com/ubt5722y58?key=c10b09eb013ea1037e5db593835845f6",
+    "https://consciousdunkvastly.com/sav6psxqxm?key=a6feec5a93f11adc66e9b3bb34218658",
+    "https://consciousdunkvastly.com/ncz12e5s?key=288aa985942b0c0c3d22dc08ee0f108f",
+    "https://consciousdunkvastly.com/bzi5nbki?key=cb7bd86230cc00d0453ef11325a1f47d",
+    "https://consciousdunkvastly.com/yi1iq0zz3?key=755b9dd3ead561190581c0363f80fb12",
+    "https://consciousdunkvastly.com/exqea7hi3v?key=5d23588e1bcbd0a46e90e4c20c92f291",
+    "https://consciousdunkvastly.com/hpmvgu3hcd?key=8df24f162b0fd82262631475e0d307de",
+    "https://consciousdunkvastly.com/u88pcm1jg?key=53c141d436a5aba6fa20cfec27d389c6",
+    "https://consciousdunkvastly.com/dhuynjw2w2?key=febf113daa9e7954cda10ff4e77f73f8",
+    "https://consciousdunkvastly.com/w6f9ra4w?key=112f6fa5785a38d49fb383a1a1463d00",
+    "https://consciousdunkvastly.com/kwk80pz0nj?key=f4f8eaae9c0123fa0fe47765b1638ede",
+    "https://consciousdunkvastly.com/pd06igvhir?key=bd6d13b3142c0b2214477b069dde0578",
+    "https://consciousdunkvastly.com/puiv48q5?key=e3f473d7df2ca275ec2ed063448b9696",
+    "https://consciousdunkvastly.com/yyx1fgke?key=5d2683e80aa589dcc24a496ade644440",
+    "https://consciousdunkvastly.com/ss5g1i9gu?key=df7d6b04df2e53ece5b04040e2ebec8f",
+    "https://consciousdunkvastly.com/w71tdr6s?key=49e03f7d800aef9e9b75e9e3641a4904",
+    "https://consciousdunkvastly.com/micz9j0nx?key=29ef103e6f951ade33c12b5d5886bb2c",
+    "https://consciousdunkvastly.com/zxjanym3?key=7a679483caea13d192b64214f1ceeb91",
+    "https://consciousdunkvastly.com/eqgkacke?key=962e98d945b88409c218fd938424f30c",
+    "https://consciousdunkvastly.com/ph5gxxk36?key=77f414380e75b9518fede0203628e069",
+    "https://consciousdunkvastly.com/xz4nv83h7x?key=5b64858ffe632c01db6ff9d0d862d1e9",
+    "https://consciousdunkvastly.com/it1deuha?key=e87cd3236ad7a7c0bde1cc4e2fd5fb71",
+    "https://consciousdunkvastly.com/qvma0mcjk?key=85689479f4c4c1b46c9880af19a92b17",
+  ];
+  const OFFER_DATA = [
+    { name: "🎁 Simple Bonus Pack", icon: "wind", linkIndex: 0 },
+    { name: "💜 Amethyst Bonus", icon: "leaf", linkIndex: 1 },
+    { name: "🏁 Finish Line Bonus", icon: "wink", linkIndex: 2 },
+    { name: "🔮 Ruby Treasure Vault", icon: "laugh", linkIndex: 3 },
+    { name: "✨ Shining Reward Gem", icon: "ticket", linkIndex: 4 },
+    { name: "🧙 Magic Rewards", icon: "book", linkIndex: 5 },
+    { name: "🌲 Forest Access", icon: "leaf", linkIndex: 6 },
+    { name: "🔱 Gold Tier Access", icon: "key", linkIndex: 7 },
+    { name: "🪐 Saturn Vault", icon: "cogs", linkIndex: 8 },
+    { name: "🌟 Daily Spark Gift", icon: "flower", linkIndex: 9 },
+    { name: "☕ Coffee Bonus", icon: "camera", linkIndex: 10 },
+    { name: "🚂 Train Perks", icon: "water", linkIndex: 11 },
+    { name: "👑 Royal Access Pass", icon: "shield-alt", linkIndex: 12 },
+    { name: "🚀 Smooth Boost Voucher", icon: "compass", linkIndex: 13 },
+    { name: "🐯 Tiger Pack", icon: "location", linkIndex: 14 },
+    { name: "🍀 Four Leaf Clover", icon: "flag", linkIndex: 15 },
+    { name: "💙 Sapphire Benefits", icon: "star", linkIndex: 16 },
+    { name: "⭐ Star Rewards", icon: "music", linkIndex: 17 },
+    { name: "🔔 Soft Flash Alert", icon: "cloud", linkIndex: 18 },
+    { name: "⛰️ Peak Access Pass", icon: "users", linkIndex: 19 },
+    { name: "⚡ Lightning Boost", icon: "heart", linkIndex: 20 },
+    { name: "🎉 Celebration Bonus", icon: "moon", linkIndex: 21 },
+    { name: "🐻 Bear Rewards", icon: "rocket", linkIndex: 22 },
+    { name: "📡 Signal Boost", icon: "handshake", linkIndex: 23 },
+    { name: "🧭 Kind Navigator Bonus", icon: "lightbulb", linkIndex: 24 },
+    { name: "🥤 Soda Rewards", icon: "thumbs-up", linkIndex: 25 },
+    { name: "🔥 Blaze Bonus Token", icon: "mountain", linkIndex: 26 },
+    { name: "📸 Easy Snapshot", icon: "bell", linkIndex: 27 },
+    { name: "💎 Diamond Vault Key", icon: "rocket", linkIndex: 28 },
+    { name: "🥇 Gold Access", icon: "palette", linkIndex: 29 },
+  ];
+  const TOTAL_OFFERS = 30;
+  let clickCounts = new Array(TOTAL_OFFERS).fill(0);
+  let claimedStatus = new Array(TOTAL_OFFERS).fill(false);
+  const STORAGE_KEY = "generatedOfferClicks";
+  const CLAIMED_KEY = "generatedOfferClaimed";
+  const TIER_OFFERS = {};
+  for (let tier = 1; tier <= 10; tier++) {
+    TIER_OFFERS[tier] = [];
+    for (let j = 0; j < 3; j++) {
+      const idx = (tier - 1) * 3 + j;
+      TIER_OFFERS[tier].push({
+        name: OFFER_DATA[idx].name,
+        icon: OFFER_DATA[idx].icon,
+        link: ALL_LINKS[idx],
+        originalIndex: idx
+      });
+    }
+  }
+  function loadCounts() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        let arr = JSON.parse(saved);
+        if (arr.length === TOTAL_OFFERS) clickCounts = arr;
+      } catch(e) {}
+    }
+    const savedClaimed = localStorage.getItem(CLAIMED_KEY);
+    if (savedClaimed) {
+      try {
+        let arr = JSON.parse(savedClaimed);
+        if (arr.length === TOTAL_OFFERS) claimedStatus = arr;
+      } catch(e) {}
+    }
+  }
+  function saveCounts() { 
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(clickCounts));
+    localStorage.setItem(CLAIMED_KEY, JSON.stringify(claimedStatus));
+  }
+  function updateTotalDisplay() {
+    const total = clickCounts.reduce((a,b)=>a+b,0);
+    document.getElementById("totalClicks").innerText = total;
+  }
+  let currentTier = 1;
+  function renderCurrentTier() {
+    const grid = document.getElementById("offersGrid");
+    grid.innerHTML = "";
+    const offers = TIER_OFFERS[currentTier];
+    const tierNames = ["Starter Pack", "Bronze Tier", "Silver Tier", "Gold Tier", "Platinum Tier", "Emerald Tier", "Ruby Tier", "Sapphire Tier", "Diamond Tier", "Ultimate Vault"];
+    const levelTitle = document.getElementById("levelName");
+    const levelBadge = document.getElementById("levelBadge");
+    levelTitle.innerText = "Tier " + currentTier + " · " + tierNames[currentTier-1];
+    levelBadge.innerText = "3 Offers";
+    offers.forEach((offer) => {
+      const globalIdx = offer.originalIndex;
+      const count = clickCounts[globalIdx];
+      const isClaimed = claimedStatus[globalIdx];
+      const hasClick = count > 0;
+      const btn = document.createElement("a");
+      if (!isClaimed) {
+        btn.href = offer.link;
+        btn.target = "_blank";
+        btn.rel = "noopener noreferrer";
+      } else {
+        btn.href = "javascript:void(0);";
+      }
+      btn.className = "offer-btn" + (hasClick ? " clicked" : "") + (isClaimed ? " disabled" : "");
+      btn.setAttribute("data-global", globalIdx);
+      btn.innerHTML = "<div class="btn-left"><i class="fas fa-" + offer.icon + ""></i><span>" + offer.name + "</span></div><div class="click-count">" + count + "</div>";
+      if (!isClaimed) {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (claimedStatus[globalIdx]) return false;
+          claimedStatus[globalIdx] = true;
+          clickCounts[globalIdx] += 1;
+          saveCounts();
+          updateTotalDisplay();
+          renderCurrentTier();
+          window.open(offer.link, "_blank");
+          return false;
+        });
+      } else {
+        btn.style.cursor = "not-allowed";
+        btn.onclick = (e) => { e.preventDefault(); return false; };
+      }
+      grid.appendChild(btn);
+    });
+  }
+  function setActiveTier(tier) {
+    currentTier = tier;
+    document.querySelectorAll(".level-btn").forEach(btn => {
+      if (parseInt(btn.getAttribute("data-level")) === tier) btn.classList.add("active");
+      else btn.classList.remove("active");
+    });
+    document.querySelectorAll(".mobile-tier-btn").forEach(btn => {
+      if (parseInt(btn.getAttribute("data-level")) === tier) btn.classList.add("active");
+      else btn.classList.remove("active");
+    });
+    renderCurrentTier();
+  }
+  function resetCounters() {
+    for (let i = 0; i < TOTAL_OFFERS; i++) {
+      clickCounts[i] = 0;
+      claimedStatus[i] = false;
+    }
+    saveCounts();
+    updateTotalDisplay();
+    renderCurrentTier();
+  }
+  function buildTriggers() {
+    const desktopContainer = document.getElementById("desktopTriggers");
+    const mobileContainer = document.getElementById("mobileTriggers");
+    desktopContainer.innerHTML = "";
+    mobileContainer.innerHTML = "";
+    for (let i = 1; i <= 10; i++) {
+      const dBtn = document.createElement("div");
+      dBtn.className = "level-btn";
+      dBtn.setAttribute("data-level", i);
+      dBtn.innerHTML = "<i class="fas fa-tag"></i> " + i;
+      dBtn.addEventListener("click", () => setActiveTier(i));
+      desktopContainer.appendChild(dBtn);
+      const mBtn = document.createElement("div");
+      mBtn.className = "mobile-tier-btn";
+      mBtn.setAttribute("data-level", i);
+      mBtn.innerHTML = "<i class="fas fa-tag"></i> " + i;
+      mBtn.addEventListener("click", () => setActiveTier(i));
+      mobileContainer.appendChild(mBtn);
+    }
+  }
+  document.getElementById("resetAllBtn").addEventListener("click", resetCounters);
+  loadCounts();
+  buildTriggers();
+  setActiveTier(1);
+  updateTotalDisplay();
+</script>
+</body>
+</html>
